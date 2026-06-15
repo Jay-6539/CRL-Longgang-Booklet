@@ -23,6 +23,7 @@ export function FlipbookViewer() {
   const bookRef = useRef<any>(null);
   const isMobile = useMobileMode(viewerConfig.displayMode.mobileBreakpoint);
   const [viewport, setViewport] = useState({ width: 1200, height: 800 });
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const pageRatio = viewerConfig.pageRatio.width / viewerConfig.pageRatio.height;
   const pageQuality = viewerConfig.performance.highResOnlyOnZoom ? "low" : "high";
@@ -66,8 +67,49 @@ export function FlipbookViewer() {
     };
   }, [pageSources]);
 
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    onFullscreenChange();
+    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+  }, []);
+
+  const enterFullscreen = async () => {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+    }
+  };
+
+  const exitFullscreen = async () => {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    }
+  };
+
   return (
     <div className="viewer-frame">
+      <div className="fullscreen-controls">
+        <button
+          type="button"
+          className="fullscreen-button"
+          aria-label="进入全屏"
+          onClick={enterFullscreen}
+          disabled={isFullscreen}
+        >
+          ⛶
+        </button>
+        <button
+          type="button"
+          className="fullscreen-button"
+          aria-label="退出全屏"
+          onClick={exitFullscreen}
+          disabled={!isFullscreen}
+        >
+          ×
+        </button>
+      </div>
       <div
         className="book-shell"
         style={{
