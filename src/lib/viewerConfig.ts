@@ -12,8 +12,8 @@ export const viewerConfig = {
     height: 762
   },
   animation: {
-    flipTimeMs: 520,
-    maxShadowOpacity: 0.3,
+    flipTimeMs: 420,
+    maxShadowOpacity: 0.2,
     showCover: true
   },
   toolbar: {
