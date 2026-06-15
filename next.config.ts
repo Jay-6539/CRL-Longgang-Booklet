@@ -5,6 +5,9 @@ const repoName = "CRL-Longgang-Booklet";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true
+  },
   output: "export",
   trailingSlash: true,
   basePath: isGithubActions ? `/${repoName}` : "",

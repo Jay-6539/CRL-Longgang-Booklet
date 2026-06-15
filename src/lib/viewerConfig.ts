@@ -1,9 +1,9 @@
 export const viewerConfig = {
   // 阶段 3: 显示策略可在这里逐项冻结
   displayMode: {
-    desktop: "double",
-    tablet: "double",
-    mobile: "double",
+    desktop: "double" as "single" | "double",
+    tablet: "double" as "single" | "double",
+    mobile: "double" as "single" | "double",
     mobileBreakpoint: 768
   },
   pageRatio: {
