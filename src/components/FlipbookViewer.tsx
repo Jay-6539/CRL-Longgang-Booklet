@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { pageManifest } from "@/lib/pageManifest";
+import { buildPageSvgDataUrl } from "@/lib/pageSvg";
 import { viewerConfig } from "@/lib/viewerConfig";
 import { ViewerToolbar } from "./ViewerToolbar";
 
@@ -125,7 +126,7 @@ export function FlipbookViewer() {
               <div key={asset.id} className="page-card">
                 {shouldLoad ? (
                   <img
-                    src={`${asset.src}?q=${quality}`}
+                    src={buildPageSvgDataUrl(asset.id, quality)}
                     alt={asset.alt}
                     loading="lazy"
                     decoding="async"

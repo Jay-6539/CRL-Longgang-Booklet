@@ -22,7 +22,7 @@
 - `src/components/ViewerToolbar.tsx` 操作栏
 - `src/lib/viewerConfig.ts` 显示策略冻结点
 - `src/lib/pageManifest.ts` 页面资源清单
-- `src/app/api/page/[index]/route.ts` 示例页资源接口（可替换为真实图片）
+- `src/lib/pageSvg.ts` 示例页 SVG 生成（静态部署兼容）
 
 ## 本地运行
 
@@ -36,8 +36,16 @@ npm run dev
 ## 替换为真实画册内容
 
 1. 准备导出的页图（建议 WebP，多分辨率）。
-2. 修改 `src/lib/pageManifest.ts` 的 `src` 指向真实静态资源路径。
-3. 如使用 CDN，可按缩放倍率拼接不同分辨率 URL。
+2. 在 `src/lib/pageManifest.ts` 维护页数与元数据。
+3. 在 `src/components/FlipbookViewer.tsx` 将 `buildPageSvgDataUrl(...)` 替换为你的真实图片 URL 逻辑。
+4. 如使用 CDN，可按缩放倍率拼接不同分辨率 URL。
+
+## GitHub Pages 发布
+
+推送到 `main` 后会自动触发 `.github/workflows/deploy-pages.yml`。  
+首次发布完成后，站点地址为：
+
+`https://jay-6539.github.io/CRL-Longgang-Booklet/`
 
 ## 逐条微调显示策略（阶段 3）
 
