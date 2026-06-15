@@ -9,48 +9,42 @@
 html,
 body {
   margin: 0;
-  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #0a0f1a;
-  color: #e6ecf5;
+  background: #8a8f99;
 }
 
-.page-shell {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 20px 20px 32px;
+#__next {
+  width: 100%;
+  height: 100%;
 }
 
-.viewer-title {
-  margin: 0 0 6px;
-  font-size: 1.2rem;
-  font-weight: 650;
-}
-
-.viewer-subtitle {
-  margin: 0 0 16px;
-  color: #a7b2c7;
-  font-size: 0.95rem;
+.minimal-shell {
+  width: 100vw;
+  height: 100vh;
+  background: #8a8f99;
 }
 
 .viewer-frame {
+  width: 100%;
+  height: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
   padding: 12px;
-  border-radius: 14px;
-  border: 1px solid #243047;
   background: #8a8f99;
 }
 
 .page-card {
-  position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
-  background: #fff;
-  color: #0f1728;
-  border: 1px solid #cfd8e7;
+  background: #f4f4f4;
+  border: 0;
+  box-shadow: none;
 }
 
 .page-card img {
@@ -60,94 +54,8 @@ body {
   display: block;
 }
 
-.page-label {
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: rgba(15, 23, 40, 0.76);
-  color: #f8fbff;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 14px;
-  padding: 10px 12px;
-  border: 1px solid rgba(165, 181, 211, 0.42);
-  border-radius: 12px;
-  background: rgba(226, 235, 247, 0.28);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(8, 14, 25, 0.18);
-}
-
-.toolbar-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.toolbar button {
-  border: 1px solid rgba(125, 141, 170, 0.6);
-  color: #1f2d46;
-  background: rgba(244, 248, 255, 0.65);
-  padding: 7px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.toolbar button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.toolbar-metric {
-  color: #2f3d58;
-  font-size: 0.88rem;
-  min-width: 110px;
-}
-
-.settings-card {
-  margin-top: 16px;
-  border: 1px solid #23314a;
-  border-radius: 10px;
-  padding: 12px;
-  background: #0f1626;
-}
-
-.perf-metric {
-  margin-top: 12px;
-  text-align: center;
-  color: #9faecd;
-  font-size: 0.82rem;
-}
-
-.settings-card h3 {
-  margin: 0 0 10px;
-  font-size: 0.95rem;
-}
-
-.settings-list {
-  margin: 0;
-  padding-left: 18px;
-  color: #b6c1d7;
-  font-size: 0.88rem;
-  line-height: 1.6;
-}
-
-@media (max-width: 900px) {
-  .page-shell {
-    padding-inline: 12px;
-  }
-
-  .toolbar {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+.page-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e7e7e7;
 }
