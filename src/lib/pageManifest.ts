@@ -5,8 +5,8 @@ export type PageAsset = {
   alt: string;
 };
 
-const PAGE_WIDTH = 1200;
-const PAGE_HEIGHT = 1700;
+const PAGE_WIDTH = 678;
+const PAGE_HEIGHT = 762;
 
 export const pageManifest: PageAsset[] = Array.from({ length: 28 }, (_, index) => {
   const page = index + 1;

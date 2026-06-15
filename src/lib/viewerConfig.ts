@@ -7,8 +7,9 @@ export const viewerConfig = {
     mobileBreakpoint: 768
   },
   pageRatio: {
-    width: 1200,
-    height: 1700
+    // 单页比例；双页展开即 2 * width : height = 1356:762
+    width: 678,
+    height: 762
   },
   animation: {
     flipTimeMs: 520,

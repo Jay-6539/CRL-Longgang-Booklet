@@ -1,4 +1,9 @@
-export function buildPageSvgDataUrl(index: number, quality: "low" | "high") {
+export function buildPageSvgDataUrl(
+  index: number,
+  quality: "low" | "high",
+  width: number,
+  height: number
+) {
   const palette = [
     ["#0f1728", "#1e2f52"],
     ["#1a2440", "#293d67"],
@@ -11,36 +16,53 @@ export function buildPageSvgDataUrl(index: number, quality: "low" | "high") {
     quality === "high"
       ? `
   <g fill="none" stroke="rgba(20,50,93,0.16)">
-    <path d="M180 500 H1020" />
-    <path d="M180 560 H1020" />
-    <path d="M180 620 H1020" />
-    <path d="M180 680 H1020" />
-    <path d="M180 740 H1020" />
+    <path d="M${Math.round(width * 0.12)} ${Math.round(height * 0.32)} H${Math.round(width * 0.88)}" />
+    <path d="M${Math.round(width * 0.12)} ${Math.round(height * 0.38)} H${Math.round(width * 0.88)}" />
+    <path d="M${Math.round(width * 0.12)} ${Math.round(height * 0.44)} H${Math.round(width * 0.88)}" />
+    <path d="M${Math.round(width * 0.12)} ${Math.round(height * 0.5)} H${Math.round(width * 0.88)}" />
+    <path d="M${Math.round(width * 0.12)} ${Math.round(height * 0.56)} H${Math.round(width * 0.88)}" />
   </g>`
       : "";
 
   const svg = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1700">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">
   <defs>
     <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
       <stop offset="0%" stop-color="${bgA}" />
       <stop offset="100%" stop-color="${bgB}" />
     </linearGradient>
   </defs>
-  <rect width="1200" height="1700" fill="url(#g)" />
-  <rect x="90" y="120" width="1020" height="1460" rx="24" fill="rgba(255,255,255,0.9)" />
-  <text x="140" y="260" font-size="58" font-family="Arial, sans-serif" fill="#132036" font-weight="700">
+  <rect width="${width}" height="${height}" fill="url(#g)" />
+  <rect
+    x="${Math.round(width * 0.075)}"
+    y="${Math.round(height * 0.07)}"
+    width="${Math.round(width * 0.85)}"
+    height="${Math.round(height * 0.86)}"
+    rx="${Math.round(width * 0.025)}"
+    fill="rgba(255,255,255,0.9)"
+  />
+  <text x="${Math.round(width * 0.11)}" y="${Math.round(height * 0.15)}" font-size="${Math.round(
+    width * 0.05
+  )}" font-family="Arial, sans-serif" fill="#132036" font-weight="700">
     CRL Longgang Brochure
   </text>
-  <text x="140" y="350" font-size="42" font-family="Arial, sans-serif" fill="#2b3a55">
+  <text x="${Math.round(width * 0.11)}" y="${Math.round(height * 0.22)}" font-size="${Math.round(
+    width * 0.038
+  )}" font-family="Arial, sans-serif" fill="#2b3a55">
     Facing Pages Demo - Page ${index}
   </text>
-  <text x="140" y="1460" font-size="30" font-family="Arial, sans-serif" fill="#4d5f81">
+  <text x="${Math.round(width * 0.11)}" y="${Math.round(height * 0.86)}" font-size="${Math.round(
+    width * 0.024
+  )}" font-family="Arial, sans-serif" fill="#4d5f81">
     Replace this generated page with your real export images (WebP preferred).
   </text>
-  <circle cx="600" cy="880" r="250" fill="rgba(20,44,90,0.08)" />
+  <circle cx="${Math.round(width * 0.5)}" cy="${Math.round(height * 0.52)}" r="${Math.round(
+    Math.min(width, height) * 0.18
+  )}" fill="rgba(20,44,90,0.08)" />
   ${detailLayer}
-  <text x="600" y="900" text-anchor="middle" font-size="180" font-family="Arial, sans-serif" fill="#1f3f76" font-weight="800">
+  <text x="${Math.round(width * 0.5)}" y="${Math.round(height * 0.54)}" text-anchor="middle" font-size="${Math.round(
+    Math.min(width, height) * 0.16
+  )}" font-family="Arial, sans-serif" fill="#1f3f76" font-weight="800">
     ${index}
   </text>
 </svg>`;

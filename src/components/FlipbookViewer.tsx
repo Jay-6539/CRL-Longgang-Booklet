@@ -126,7 +126,7 @@ export function FlipbookViewer() {
               <div key={asset.id} className="page-card">
                 {shouldLoad ? (
                   <img
-                    src={buildPageSvgDataUrl(asset.id, quality)}
+                    src={buildPageSvgDataUrl(asset.id, quality, asset.width, asset.height)}
                     alt={asset.alt}
                     loading="lazy"
                     decoding="async"
