@@ -44,6 +44,7 @@ export function FlipbookViewer() {
   const pageWidth = Math.max(180, Math.min(widthFromHeight, widthFromViewport));
   const pageHeight = Math.max(200, Math.floor(pageWidth / pageRatio));
   const showSinglePage = isMobile && viewerConfig.displayMode.mobile === "single";
+  const spreadWidth = showSinglePage ? pageWidth : pageWidth * 2;
 
   useEffect(() => {
     const updateViewport = () => {
@@ -67,47 +68,56 @@ export function FlipbookViewer() {
 
   return (
     <div className="viewer-frame">
-      <HTMLFlipBook
-        ref={bookRef}
-        width={pageWidth}
-        height={pageHeight}
-        size="fixed"
-        minWidth={pageWidth}
-        maxWidth={pageWidth}
-        minHeight={pageHeight}
-        maxHeight={pageHeight}
-        maxShadowOpacity={viewerConfig.animation.maxShadowOpacity}
-        showCover={viewerConfig.animation.showCover}
-        mobileScrollSupport
-        drawShadow
-        flippingTime={viewerConfig.animation.flipTimeMs}
-        useMouseEvents
-        disableFlipByClick={false}
-        showPageCorners={false}
-        usePortrait={showSinglePage}
-        startPage={0}
-        className=""
-        style={{}}
-        startZIndex={1}
-        autoSize={false}
-        clickEventForward
-        swipeDistance={30}
+      <div
+        className="book-shell"
+        style={{
+          width: `${spreadWidth}px`,
+          height: `${pageHeight}px`
+        }}
       >
-        {pageSources.map((asset) => {
-          return (
-            <div key={asset.id} className="page-card">
-              <img
-                src={asset.src}
-                alt={asset.alt}
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-                draggable={false}
-              />
-            </div>
-          );
-        })}
-      </HTMLFlipBook>
+        <HTMLFlipBook
+          ref={bookRef}
+          width={pageWidth}
+          height={pageHeight}
+          size="fixed"
+          minWidth={pageWidth}
+          maxWidth={pageWidth}
+          minHeight={pageHeight}
+          maxHeight={pageHeight}
+          maxShadowOpacity={viewerConfig.animation.maxShadowOpacity}
+          showCover={viewerConfig.animation.showCover}
+          mobileScrollSupport
+          drawShadow
+          flippingTime={viewerConfig.animation.flipTimeMs}
+          useMouseEvents
+          disableFlipByClick={false}
+          showPageCorners={false}
+          usePortrait={showSinglePage}
+          startPage={0}
+          className=""
+          style={{}}
+          startZIndex={1}
+          autoSize={false}
+          clickEventForward
+          swipeDistance={30}
+        >
+          {pageSources.map((asset) => {
+            return (
+              <div key={asset.id} className="page-card">
+                <img
+                  src={asset.src}
+                  alt={asset.alt}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  draggable={false}
+                />
+              </div>
+            );
+          })}
+        </HTMLFlipBook>
+        {!showSinglePage ? <div className="book-seam" /> : null}
+      </div>
     </div>
   );
 }

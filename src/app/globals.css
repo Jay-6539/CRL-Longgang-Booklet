@@ -13,7 +13,7 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #8a8f99;
+  background: #dddddd;
 }
 
 #__next {
@@ -24,7 +24,7 @@ body {
 .minimal-shell {
   width: 100vw;
   height: 100vh;
-  background: #8a8f99;
+  background: #dddddd;
 }
 
 .viewer-frame {
@@ -34,7 +34,24 @@ body {
   align-items: center;
   justify-content: center;
   padding: 12px;
-  background: #8a8f99;
+  background: #dddddd;
+}
+
+.book-shell {
+  position: relative;
+  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.book-seam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-0.5px);
+  background: #000;
+  pointer-events: none;
+  z-index: 12;
 }
 
 .page-card {
@@ -43,7 +60,7 @@ body {
   border-radius: 0;
   overflow: hidden;
   background: #f4f4f4;
-  border: 0;
+  border: 1px solid #000;
   box-shadow: none;
 }
 
