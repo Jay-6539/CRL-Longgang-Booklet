@@ -6,18 +6,6 @@ import { pageManifest } from "@/lib/pageManifest";
 import { buildPageSvgDataUrl } from "@/lib/pageSvg";
 import { viewerConfig } from "@/lib/viewerConfig";
 
-type FlipEvent = {
-  data: number;
-};
-
-type FlipBookRef = {
-  pageFlip: () => {
-    flipPrev: () => void;
-    flipNext: () => void;
-    flip: (page: number) => void;
-  };
-};
-
 function useMobileMode(breakpoint: number) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -32,20 +20,20 @@ function useMobileMode(breakpoint: number) {
 }
 
 export function FlipbookViewer() {
-  const bookRef = useRef<FlipBookRef | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const bookRef = useRef<any>(null);
   const isMobile = useMobileMode(viewerConfig.displayMode.mobileBreakpoint);
   const [viewport, setViewport] = useState({ width: 1200, height: 800 });
 
-  const totalPages = pageManifest.length;
-  const preloadRadius = viewerConfig.performance.preloadRadius;
   const pageRatio = viewerConfig.pageRatio.width / viewerConfig.pageRatio.height;
-
-  const activeWindow = useMemo(() => {
-    const start = Math.max(1, currentPage - preloadRadius);
-    const end = Math.min(totalPages, currentPage + preloadRadius);
-    return { start, end };
-  }, [currentPage, preloadRadius, totalPages]);
+  const pageQuality = viewerConfig.performance.highResOnlyOnZoom ? "low" : "high";
+  const pageSources = useMemo(
+    () =>
+      pageManifest.map((asset) => ({
+        ...asset,
+        src: buildPageSvgDataUrl(asset.id, pageQuality, asset.width, asset.height)
+      })),
+    [pageQuality]
+  );
 
   const spreadCount = 2;
   const safePadding = 24;
@@ -65,6 +53,17 @@ export function FlipbookViewer() {
     window.addEventListener("resize", updateViewport);
     return () => window.removeEventListener("resize", updateViewport);
   }, []);
+
+  useEffect(() => {
+    const preloadImages = pageSources.map((asset) => {
+      const image = new Image();
+      image.src = asset.src;
+      return image;
+    });
+    return () => {
+      preloadImages.length = 0;
+    };
+  }, [pageSources]);
 
   return (
     <div className="viewer-frame">
@@ -86,7 +85,6 @@ export function FlipbookViewer() {
         disableFlipByClick={false}
         showPageCorners={false}
         usePortrait={showSinglePage}
-        onFlip={(event: FlipEvent) => setCurrentPage(event.data + 1)}
         startPage={0}
         className=""
         style={{}}
@@ -95,22 +93,17 @@ export function FlipbookViewer() {
         clickEventForward
         swipeDistance={30}
       >
-        {pageManifest.map((asset) => {
-          const shouldLoad = asset.id >= activeWindow.start && asset.id <= activeWindow.end;
-          const quality = viewerConfig.performance.highResOnlyOnZoom ? "low" : "high";
+        {pageSources.map((asset) => {
           return (
             <div key={asset.id} className="page-card">
-              {shouldLoad ? (
-                <img
-                  src={buildPageSvgDataUrl(asset.id, quality, asset.width, asset.height)}
-                  alt={asset.alt}
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                />
-              ) : (
-                <div className="page-placeholder" />
-              )}
+              <img
+                src={asset.src}
+                alt={asset.alt}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                draggable={false}
+              />
             </div>
           );
         })}
