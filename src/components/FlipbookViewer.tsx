@@ -19,15 +19,15 @@ type FlipBookRef = {
   };
 };
 
-function useMobileMode() {
+function useMobileMode(breakpoint: number) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth < 768);
+    const update = () => setIsMobile(window.innerWidth < breakpoint);
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
+  }, [breakpoint]);
 
   return isMobile;
 }
@@ -39,7 +39,7 @@ export function FlipbookViewer() {
   const [zoom, setZoom] = useState(1);
   const [firstPaintMs, setFirstPaintMs] = useState<number | null>(null);
   const [lastFlipReactionMs, setLastFlipReactionMs] = useState<number | null>(null);
-  const isMobile = useMobileMode();
+  const isMobile = useMobileMode(viewerConfig.displayMode.mobileBreakpoint);
 
   const totalPages = pageManifest.length;
   const preloadRadius = viewerConfig.performance.preloadRadius;

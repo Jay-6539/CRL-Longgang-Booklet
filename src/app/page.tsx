@@ -2,6 +2,10 @@ import { FlipbookViewer } from "@/components/FlipbookViewer";
 import { viewerConfig } from "@/lib/viewerConfig";
 
 export default function HomePage() {
+  const modeText = `桌面${viewerConfig.displayMode.desktop === "double" ? "双页" : "单页"}，移动端${
+    viewerConfig.displayMode.mobile === "double" ? "双页" : "单页"
+  }（断点 <${viewerConfig.displayMode.mobileBreakpoint}px）`;
+
   return (
     <main className="page-shell">
       <h1 className="viewer-title">CRL Longgang Flipbook</h1>
@@ -14,7 +18,7 @@ export default function HomePage() {
       <section className="settings-card">
         <h3>当前冻结配置（阶段 3 可继续微调）</h3>
         <ul className="settings-list">
-          <li>单/双页策略：桌面双页，移动端单页。</li>
+          <li>单/双页策略：{modeText}。</li>
           <li>
             页面比例：{viewerConfig.pageRatio.width}:{viewerConfig.pageRatio.height}。
           </li>

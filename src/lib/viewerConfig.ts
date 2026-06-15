@@ -3,7 +3,8 @@ export const viewerConfig = {
   displayMode: {
     desktop: "double",
     tablet: "double",
-    mobile: "single"
+    mobile: "double",
+    mobileBreakpoint: 768
   },
   pageRatio: {
     width: 1200,
