@@ -60,6 +60,14 @@ export function FlipbookViewer() {
     bookRef.current?.pageFlip().flip(safePage - 1);
   };
 
+  const toggleFullscreen = async () => {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+    await document.documentElement.requestFullscreen();
+  };
+
   useEffect(() => {
     if (firstPaintMs !== null) {
       return;
@@ -73,6 +81,9 @@ export function FlipbookViewer() {
   return (
     <>
       <ViewerToolbar
+        showPrevNext={viewerConfig.toolbar.showPrevNext}
+        showZoom={viewerConfig.toolbar.showZoom}
+        showFullscreen={viewerConfig.toolbar.showFullscreen}
         page={currentPage}
         totalPages={totalPages}
         zoom={zoom}
@@ -83,6 +94,7 @@ export function FlipbookViewer() {
         onZoomIn={() => setZoom((value) => Math.min(1.8, +(value + 0.1).toFixed(2)))}
         onZoomOut={() => setZoom((value) => Math.max(0.75, +(value - 0.1).toFixed(2)))}
         onJump={goToPage}
+        onToggleFullscreen={toggleFullscreen}
       />
 
       <div className="viewer-frame">

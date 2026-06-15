@@ -17,8 +17,9 @@ export const viewerConfig = {
     showCover: true
   },
   toolbar: {
-    showZoom: true,
-    showJumpToPage: true,
+    showPrevNext: false,
+    showZoom: false,
+    showJumpToPage: false,
     showFullscreen: true,
     showThumbsEntry: false
   },
